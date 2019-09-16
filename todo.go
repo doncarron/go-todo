@@ -1,7 +1,7 @@
 package gotodo
 
 type Todo struct {
-	ID     string
+	ID     int
 	Text   string
 	Done   bool
 	UserID string

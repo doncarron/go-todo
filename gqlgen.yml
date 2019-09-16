@@ -16,4 +16,4 @@ autobind: []
 
 models:
   Todo:
-    model: github.com/doncarron/go-todo.Todo
+    model: github.com/doncarron/gotodo.Todo

@@ -2,9 +2,9 @@ package gotodo
 
 import (
 	context "context"
-	"fmt"
-	"math/rand"
 )
+
+var globalId = 1
 
 type Resolver struct {
 	todos []*Todo
@@ -23,9 +23,11 @@ func (r *Resolver) Todo() TodoResolver {
 type mutationResolver struct{ *Resolver }
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input NewTodo) (*Todo, error) {
+	globalId++
+
 	todo := &Todo{
 		Text:   input.Text,
-		ID:     fmt.Sprintf("T%d", rand.Int()),
+		ID:     globalId,
 		UserID: input.UserID,
 	}
 	r.todos = append(r.todos, todo)
