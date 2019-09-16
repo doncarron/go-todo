@@ -23,7 +23,7 @@ var ipList = make(map[string]string)
 func getIPList() map[string]string {
 	if ipList == nil {
 		// b := new(bytes.Buffer)
-		f, err := os.OpenFile("IPs.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		f, err := os.OpenFile("IPs.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 		defer f.Close()
 
 		d := json.NewDecoder(f)
@@ -44,7 +44,7 @@ func writeIPList(list map[string]string) {
 	// Decoding the serialized data
 	d.Encode(list)
 
-	var err = ioutil.WriteFile("IPs.log", b.Bytes(), 0644)
+	var err = ioutil.WriteFile("IPs.json", b.Bytes(), 0644)
 	if err != nil {
 		panic(err)
 	}
