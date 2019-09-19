@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/99designs/gqlgen/handler"
@@ -21,9 +22,9 @@ const defaultPort = "5050"
 var ipList = make(map[string]string)
 
 func getIPList() map[string]string {
-	if ipList == nil {
+	if ipList == nil || len(ipList) == 0 {
 		// b := new(bytes.Buffer)
-		f, err := os.OpenFile("IPs.json", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		f, err := os.OpenFile("IPs.json", os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
 		defer f.Close()
 
 		d := json.NewDecoder(f)
@@ -58,7 +59,7 @@ func Middleware() func(http.Handler) http.Handler {
 
 			var list = getIPList()
 
-			list[r.RemoteAddr] = time.Now().String()
+			list[strings.Split(r.RemoteAddr, ":")[0]] = time.Now().String()
 
 			writeIPList(list)
 
